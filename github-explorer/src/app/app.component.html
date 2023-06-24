@@ -1,0 +1,37 @@
+<header class="header">
+  <h1 class="header__title">Github Explorer</h1>
+  <section class="header__finder">
+    <p>Please type user repository to find</p>
+    <input class="header__finder-input" type="text">
+  </section>
+</header>
+<main class="github-explorer">
+  <section class="github-explorer__results">
+    <div id="pagination" class="pagination">
+      <ul id="paginationList" class="pagination__list">
+        <li id="paginationPrev" class="pagination__list-btn-prev" (click)="updatePage(-1)">Previous</li>
+        <li id="paginationNext" class="pagination__list-btn-next" (click)="updatePage(1)">Next</li>
+      </ul>
+      <div id="currentPage" class="pagination__current-page">Page: 1 </div>
+      <div id="totalPages" class="pagination__total-pages">Total APIs: 1399 </div>
+    </div>
+    <table class="github-explorer__results-table">
+      <thead>
+        <tr>
+          <th>Repository Name</th>
+          <th>Description</th>
+          <th>Git URL</th>
+        </tr>
+      </thead>
+      <tbody>
+        <div *ngIf="paginatedArray.length == 0">Loading results...</div>
+        <tr *ngFor="let repo of paginatedArray">
+          <td>{{repo.full_name}}</td>
+          <td>{{repo.description ? repo.description :"Pending description"}}</td>
+          <td><a target="_blank" href="{{repo.html_url}}" rel="noreferrer noopener">Open</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+</main>

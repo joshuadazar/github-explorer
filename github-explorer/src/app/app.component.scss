@@ -1,0 +1,102 @@
+@import "../styles/grid";
+
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: $base;
+  &__finder {
+    display: flex;
+    flex-direction: column;
+    &-input {
+      padding: calc($base / 2);
+      font-size: 1rem;
+    }
+  }
+}
+
+.github-explorer {
+  &__results {
+    &-table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    thead tr {
+      background-color: #ccc;
+    }
+
+    th,
+    td {
+      padding: 10px;
+    }
+
+    th {
+      text-align: left;
+    }
+
+    .pagination {
+      order: 1;
+      display: flex;
+      justify-content: space-around;
+
+      &__current-page,
+      &__total-pages {
+        position: absolute;
+      }
+
+      &__total-pages {
+        right: 0;
+        padding-right: 1rem;
+      }
+
+      &__current-page {
+        left: 0;
+        padding-left: 1rem;
+      }
+
+      &__list {
+        align-items: center;
+        display: flex;
+        justify-content: space-around;
+        list-style: none;
+        padding: 0;
+
+        &-btn-prev,
+        &-btn-next {
+          cursor: pointer;
+          padding: 0 1rem;
+          position: relative;
+          user-select: none;
+
+          &:hover {
+            text-shadow: 0 0 1px white;
+          }
+        }
+
+        &-btn-prev {
+          &::before {
+            content: "◄";
+            margin-right: 10px;
+            transition: color 0.3s ease-in-out;
+          }
+          &:hover::before {
+            color: silver;
+          }
+        }
+
+        &-btn-next {
+          &::after {
+            content: "►";
+            margin-left: 10px;
+            transition: color 0.3s ease-in-out;
+          }
+          &:hover::after {
+            color: silver;
+          }
+        }
+      }
+    }
+  }
+}
