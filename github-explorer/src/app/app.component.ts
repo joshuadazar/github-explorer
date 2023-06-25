@@ -32,6 +32,11 @@ export class AppComponent {
     this.getRepoData();
   }
 
+  /**
+   * Create API request and fill array fields.
+   * * @param {string} value DOM input value.
+   * @private
+   */
   getRepoData(value = this.searchValue) {
     if (this.validateSearchValue()) {
       this.paginatedArray = [];
@@ -49,6 +54,10 @@ export class AppComponent {
     }
   }
 
+  /**
+   * Validates if search value is valid.
+   * @private
+   */
   validateSearchValue() {
     this.searchValue = this.searchValue.trim();
 
@@ -57,16 +66,30 @@ export class AppComponent {
       : this.errorMessage(this.errorMessages.length);
   }
 
+  /**
+   * Cleans validation messages if not exist errors.
+   * @private
+   */
   cleanErrorMessage() {
     this.validationSearch = "";
     return true;
   }
 
+  /**
+   * Manages input validation message.
+   * @private
+   */
   errorMessage(message: string) {
     this.validationSearch = message;
     return false
   }
 
+  /**
+   * Manages data table and pagination.
+   * * * @param {number} pageNumber current page number.
+   * * * @param {number} pageSize fields per page .
+   * @private
+   */
   showRepos(pageNumber = this.page, pageSize = this.pageSize) {
     const startIndex = (pageNumber - 1) * pageSize;
     const endIndex = startIndex + pageSize;
@@ -82,10 +105,15 @@ export class AppComponent {
     }
   }
 
-  updatePage(value: number) {
+  /**
+   * Updates data table and manage pagination.
+   * * * @param {number} pageNumber current data table page.
+   * @private
+   */
+  updatePage(pageNumber: number) {
 
-    if (value == 1 && this.endIndex < this.repositoryArray.length) {
-      this.page = this.page + value;
+    if (pageNumber == 1 && this.endIndex < this.repositoryArray.length) {
+      this.page = this.page + pageNumber;
     }
     else {
       this.page = 1;
@@ -94,10 +122,20 @@ export class AppComponent {
     this.showRepos();
   }
 
+  /**
+  * Listens keyborad events from pagination buttons.
+  * * * @param {KeyboardEvent} e input field keyboard events.
+  * @private
+  */
   onKeyPress(e: KeyboardEvent, value: number) {
     e.code == "Space" || e.code == "Enter" && this.updatePage(value);
   }
 
+  /**
+  * Updates data table and manage pagination.
+  * * * @param {KeyboardEvent} e input field keyboard events.
+  * @private
+  */
   searchValueRequest(e: KeyboardEvent) {
     e.code == "Enter" && this.getRepoData(this.searchValue);
   }
