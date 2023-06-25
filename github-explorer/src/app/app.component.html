@@ -12,8 +12,10 @@
         <li id="paginationPrev" class="pagination__list-btn-prev" (click)="updatePage(-1)">Previous</li>
         <li id="paginationNext" class="pagination__list-btn-next" (click)="updatePage(1)">Next</li>
       </ul>
-      <div id="currentPage" class="pagination__current-page">Page: 1 </div>
-      <div id="totalPages" class="pagination__total-pages">Total APIs: 1399 </div>
+      <div id="currentPage" class="pagination__current-page">
+        Page: {{this.page}} of {{this.repositoryArray.length / this.pageSize}}
+      </div>
+      <div id="totalPages" class="pagination__total-pages">Total Repos: {{this.repositoryArray.length}} </div>
     </div>
     <table class="github-explorer__results-table">
       <thead>

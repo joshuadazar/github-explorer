@@ -11,7 +11,10 @@ export class AppComponent {
 
   public repositoryArray: IRepo[] = [];
   public paginatedArray: IRepo[] = [];
+  public pageSize = 10;
   public page = 1;
+  public endIndex = 0;
+  public startIndex = 0;
 
   constructor(
     private ds: HttpRequestsService
@@ -27,17 +30,24 @@ export class AppComponent {
     })
   }
 
-  showRepos(pageNumber = this.page, pageSize = 10) {
+  showRepos(pageNumber = this.page, pageSize = this.pageSize) {
     const startIndex = (pageNumber - 1) * pageSize;
     const endIndex = startIndex + pageSize;
-    console.log(endIndex);
+
+    this.startIndex = startIndex;
+    this.endIndex = endIndex;
     this.paginatedArray = this.repositoryArray.slice(startIndex, endIndex);
   }
 
   updatePage(value: number) {
-    if (this.page > 1) {
+
+    if (value == 1 && this.endIndex < this.repositoryArray.length) {
       this.page = this.page + value;
-      this.showRepos();
+
+    } else {
+      this.page = 1;
     }
+    this.showRepos();
+    console.log(this.endIndex);
   }
 }
