@@ -12,7 +12,7 @@ export class HttpRequestsService {
     private http: HttpClient
   ) { }
 
-  getUsers(user = "joshuadazar") {
+  getUsers(user: string) {
     return this.http.get<any[]>(`${this.APIURL}/${user}/repos`);
   }
 

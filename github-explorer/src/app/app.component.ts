@@ -9,6 +9,7 @@ import { HttpRequestsService } from './services/http/http-requests.service';
 })
 export class AppComponent {
 
+  public searchValue = "";
   public repositoryArray: IRepo[] = [];
   public paginatedArray: IRepo[] = [];
   public pageSize = 10;
@@ -21,13 +22,23 @@ export class AppComponent {
   ) { }
 
   ngOnInit() {
-    this.ds.getUsers().subscribe(res => {
-      if (res !== undefined) {
-        this.repositoryArray = res;
-        console.log(res);
-        this.showRepos();
-      }
-    })
+    this.getRepoData();
+  }
+
+  getRepoData(value = "joshuadazar") {
+    if (this.validateSearchValue()) {
+      this.ds.getUsers(value).subscribe(res => {
+        if (res !== undefined) {
+          this.repositoryArray = res;
+          console.log(res);
+          this.showRepos();
+        }
+      })
+    }
+  }
+
+  validateSearchValue() {
+    return this.searchValue.length > 4 ? true : false;
   }
 
   showRepos(pageNumber = this.page, pageSize = this.pageSize) {
@@ -48,6 +59,17 @@ export class AppComponent {
       this.page = 1;
     }
     this.showRepos();
-    console.log(this.endIndex);
+  }
+
+  onKeyPress(e: KeyboardEvent, value: number) {
+    if (e.code == "Space" || e.code == "Enter") {
+      this.updatePage(value);
+    }
+  }
+
+  searchValueRequest(e: KeyboardEvent) {
+    if (e.code == "Enter") {
+      this.getRepoData(this.searchValue);
+    }
   }
 }

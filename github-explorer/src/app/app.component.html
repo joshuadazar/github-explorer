@@ -1,16 +1,19 @@
 <header class="header">
   <h1 class="header__title">Github Explorer</h1>
   <section class="header__finder">
-    <p>Please type user repository to find</p>
-    <input class="header__finder-input" type="text">
+    <p class="header__finder-title">Please type user repository to find</p>
+    <input class="header__finder-input" type="text" [(ngModel)]="searchValue" (keypress)="searchValueRequest($event)">
+    <button class="header__finder-btn" (click)="getRepoData(this.searchValue)">Search user Repositories</button>
   </section>
 </header>
 <main class="github-explorer">
   <section class="github-explorer__results">
     <div id="pagination" class="pagination">
       <ul id="paginationList" class="pagination__list">
-        <li id="paginationPrev" class="pagination__list-btn-prev" (click)="updatePage(-1)">Previous</li>
-        <li id="paginationNext" class="pagination__list-btn-next" (click)="updatePage(1)">Next</li>
+        <li tabindex="0" id="paginationPrev" class="pagination__list-btn-prev" (keypress)="onKeyPress($event, -1 )"
+          (click)="updatePage(-1)">Previous</li>
+        <li tabindex="0" id="paginationNext" class="pagination__list-btn-next" (keypress)="onKeyPress($event, 1)"
+          (click)="updatePage(1)">Next</li>
       </ul>
       <div id="currentPage" class="pagination__current-page">
         Page: {{this.page}} of {{this.repositoryArray.length / this.pageSize}}
@@ -21,7 +24,10 @@
       <thead>
         <tr>
           <th>Repository Name</th>
+          <th>Owner</th>
           <th>Description</th>
+          <th>Forks</th>
+          <th>🌟</th>
           <th>Git URL</th>
         </tr>
       </thead>
@@ -29,8 +35,11 @@
         <div *ngIf="paginatedArray.length == 0">Loading results...</div>
         <tr *ngFor="let repo of paginatedArray">
           <td>{{repo.full_name}}</td>
-          <td>{{repo.description ? repo.description :"Pending description"}}</td>
-          <td><a target="_blank" href="{{repo.html_url}}" rel="noreferrer noopener">Open</a></td>
+          <td>{{repo.owner?.login}}</td>
+          <td class="description">{{repo.description ? repo.description :"Pending description"}}</td>
+          <td>{{repo.forks}}</td>
+          <td>{{repo.stargazers_count}}</td>
+          <td><a target="_blank" href="{{repo.html_url}}" rel="noreferrer noopener">Link</a></td>
         </tr>
       </tbody>
     </table>

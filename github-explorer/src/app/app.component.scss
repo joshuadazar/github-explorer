@@ -1,17 +1,32 @@
-@import "../styles/grid";
+@import "../styles/index";
 
 .header {
+  align-items: center;
+  background: $purple;
+  color: $white;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   padding: $base;
   &__finder {
     display: flex;
     flex-direction: column;
+    &-title {
+      text-align: center;
+    }
     &-input {
       padding: calc($base / 2);
       font-size: 1rem;
+    }
+    &-btn {
+      background-color: $green;
+      cursor: pointer;
+      display: inline-block;
+      font-size: 18px;
+      font-weight: 700;
+      height: 48px;
+      letter-spacing: -0.5px;
+      padding: 0 26px;
     }
   }
 }
@@ -21,15 +36,23 @@
     &-table {
       border-collapse: collapse;
       width: 100%;
+
+      .description {
+        white-space: wrap;
+      }
     }
 
     thead tr {
-      background-color: #ccc;
+      background-color: $purpleLight;
+      color: $grey;
     }
 
     th,
     td {
       padding: 10px;
+      a {
+        color: $white;
+      }
     }
 
     th {

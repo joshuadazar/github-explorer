@@ -1,4 +1,9 @@
+@import "./styles/index";
+
 body {
+  background: $purple;
+  color: $white;
   display: flex;
+  font-family: "Rubik", sans-serif;
   flex-direction: column;
 }
