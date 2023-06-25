@@ -16,5 +16,4 @@ export class HttpRequestsService {
     return this.http.get<any[]>(`${this.APIURL}/${user}/repos`);
   }
 
-
 }

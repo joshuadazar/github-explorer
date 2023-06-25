@@ -9,7 +9,14 @@ import { HttpRequestsService } from './services/http/http-requests.service';
 })
 export class AppComponent {
 
-  public searchValue = "";
+  public errorMessages = {
+    notFound: "This user doesn't exists, please check for typing errors",
+    empty: "This user exist but does not have repositories",
+    length: "type at least 5 alphanumerical characters",
+  };
+  public validationSearch = "";
+  public tableStatus = "Please check if user exist or typed correctly";
+  public searchValue = "joshuadazar";
   public repositoryArray: IRepo[] = [];
   public paginatedArray: IRepo[] = [];
   public pageSize = 10;
@@ -25,51 +32,73 @@ export class AppComponent {
     this.getRepoData();
   }
 
-  getRepoData(value = "joshuadazar") {
+  getRepoData(value = this.searchValue) {
     if (this.validateSearchValue()) {
+      this.paginatedArray = [];
       this.ds.getUsers(value).subscribe(res => {
         if (res !== undefined) {
           this.repositoryArray = res;
-          console.log(res);
           this.showRepos();
+        }
+      }, error => {
+        if (error.status === 404) {
+          this.errorMessage(this.errorMessages.notFound);
+          this.tableStatus = this.errorMessages.notFound;
         }
       })
     }
   }
 
   validateSearchValue() {
-    return this.searchValue.length > 4 ? true : false;
+    this.searchValue = this.searchValue.trim();
+
+    return this.searchValue.length > 3
+      ? this.cleanErrorMessage()
+      : this.errorMessage(this.errorMessages.length);
+  }
+
+  cleanErrorMessage() {
+    this.validationSearch = "";
+    return true;
+  }
+
+  errorMessage(message: string) {
+    this.validationSearch = message;
+    return false
   }
 
   showRepos(pageNumber = this.page, pageSize = this.pageSize) {
     const startIndex = (pageNumber - 1) * pageSize;
     const endIndex = startIndex + pageSize;
-
     this.startIndex = startIndex;
     this.endIndex = endIndex;
-    this.paginatedArray = this.repositoryArray.slice(startIndex, endIndex);
+
+    if (this.repositoryArray.length == 0) {
+      this.errorMessage(this.errorMessages.empty);
+      this.tableStatus = this.errorMessages.empty;
+    }
+    else {
+      this.paginatedArray = this.repositoryArray.slice(startIndex, endIndex);
+    }
   }
 
   updatePage(value: number) {
 
     if (value == 1 && this.endIndex < this.repositoryArray.length) {
       this.page = this.page + value;
-
-    } else {
+    }
+    else {
       this.page = 1;
     }
+
     this.showRepos();
   }
 
   onKeyPress(e: KeyboardEvent, value: number) {
-    if (e.code == "Space" || e.code == "Enter") {
-      this.updatePage(value);
-    }
+    e.code == "Space" || e.code == "Enter" && this.updatePage(value);
   }
 
   searchValueRequest(e: KeyboardEvent) {
-    if (e.code == "Enter") {
-      this.getRepoData(this.searchValue);
-    }
+    e.code == "Enter" && this.getRepoData(this.searchValue);
   }
 }

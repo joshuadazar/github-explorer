@@ -7,32 +7,70 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: $base;
+  padding: $base $base $baseL;
+
   &__finder {
     display: flex;
     flex-direction: column;
+
     &-title {
       text-align: center;
     }
+
     &-input {
       padding: calc($base / 2);
       font-size: 1rem;
     }
-    &-btn {
-      background-color: $green;
-      cursor: pointer;
-      display: inline-block;
-      font-size: 18px;
-      font-weight: 700;
-      height: 48px;
-      letter-spacing: -0.5px;
-      padding: 0 26px;
+
+    &-validate {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+
+      &.animate {
+        .header__finder-img {
+          animation: shake 0.1s 3 linear;
+        }
+        .header__finder-message {
+          text-shadow: 0 0 2px $white;
+        }
+      }
+
+      @keyframes shake {
+        50% {
+          transform: rotate(30deg);
+        }
+
+        100% {
+          transform: rotate(-30deg);
+        }
+      }
+    }
+    &-container {
+      padding: $base;
+
+      &_btn {
+        background-color: $green;
+        border-radius: 100px;
+        border-width: 0;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 18px;
+        font-weight: 700;
+        height: 48px;
+        letter-spacing: -0.5px;
+        padding: 0 26px;
+      }
     }
   }
 }
 
 .github-explorer {
   &__results {
+    @include desktop {
+      padding: 0 $baseXL;
+    }
+
     &-table {
       border-collapse: collapse;
       width: 100%;
@@ -63,20 +101,40 @@
       order: 1;
       display: flex;
       justify-content: space-around;
+      gap: $base;
+
+      @include mobile {
+        flex-direction: column;
+      }
 
       &__current-page,
       &__total-pages {
         position: absolute;
+        text-align: center;
+
+        @include mobile {
+          position: relative;
+        }
       }
 
       &__total-pages {
-        right: 0;
+        right: $baseXL;
         padding-right: 1rem;
+
+        @include mobile {
+          padding-right: 0;
+          right: 0;
+        }
       }
 
       &__current-page {
-        left: 0;
+        left: $baseXL;
         padding-left: 1rem;
+
+        @include mobile {
+          left: 0;
+          padding-left: 0;
+        }
       }
 
       &__list {
@@ -86,6 +144,10 @@
         list-style: none;
         padding: 0;
 
+        @include mobile {
+          order: 3;
+        }
+
         &-btn-prev,
         &-btn-next {
           cursor: pointer;
@@ -94,7 +156,7 @@
           user-select: none;
 
           &:hover {
-            text-shadow: 0 0 1px white;
+            text-shadow: 0 0 1px $white;
           }
         }
 
@@ -105,7 +167,7 @@
             transition: color 0.3s ease-in-out;
           }
           &:hover::before {
-            color: silver;
+            color: $green;
           }
         }
 
@@ -116,7 +178,7 @@
             transition: color 0.3s ease-in-out;
           }
           &:hover::after {
-            color: silver;
+            color: $green;
           }
         }
       }

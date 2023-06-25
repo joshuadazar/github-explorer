@@ -2,8 +2,17 @@
   <h1 class="header__title">Github Explorer</h1>
   <section class="header__finder">
     <p class="header__finder-title">Please type user repository to find</p>
-    <input class="header__finder-input" type="text" [(ngModel)]="searchValue" (keypress)="searchValueRequest($event)">
-    <button class="header__finder-btn" (click)="getRepoData(this.searchValue)">Search user Repositories</button>
+    <label for="search" class="header__finder-validate" [ngClass]="{'animate': validationSearch}"
+      *ngIf="validationSearch">
+      <img class="header__finder-img" height=" 50px" src="../assets/logo.svg" alt="">
+      <p class="header__finder-message">{{validationSearch}}</p>
+    </label>
+    <input id="search" class="header__finder-input" type="text" [(ngModel)]="searchValue"
+      (keypress)="searchValueRequest($event)">
+    <div class="header__finder-container">
+      <button class="header__finder-container_btn" (click)="getRepoData(this.searchValue)">Search user
+        Repositories</button>
+    </div>
   </section>
 </header>
 <main class="github-explorer">
@@ -32,7 +41,7 @@
         </tr>
       </thead>
       <tbody>
-        <div *ngIf="paginatedArray.length == 0">Loading results...</div>
+        <div *ngIf="paginatedArray.length == 0">{{tableStatus}}</div>
         <tr *ngFor="let repo of paginatedArray">
           <td>{{repo.full_name}}</td>
           <td>{{repo.owner?.login}}</td>
