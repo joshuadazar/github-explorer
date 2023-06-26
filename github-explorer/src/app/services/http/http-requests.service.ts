@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
-
+import { IRepo } from '../../models/iRepo';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +13,7 @@ export class HttpRequestsService {
   ) { }
 
   getUsers(user: string) {
-    return this.http.get<any[]>(`${this.APIURL}/${user}/repos`);
+    return this.http.get<IRepo[]>(`${this.APIURL}/${user}/repos`);
   }
 
 }
