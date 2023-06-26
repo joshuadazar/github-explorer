@@ -162,7 +162,7 @@
 
         &-btn-prev {
           &::before {
-            content: "◄";
+            content: "❮";
             margin-right: 10px;
             transition: color 0.3s ease-in-out;
           }
@@ -173,7 +173,7 @@
 
         &-btn-next {
           &::after {
-            content: "►";
+            content: "❯";
             margin-left: 10px;
             transition: color 0.3s ease-in-out;
           }
